@@ -9,7 +9,7 @@ class PQueue {
 
 public:
 	PQueue(); //constructor fara parametrii
-	PQueue(int []); //constructor cu parametrii
+	PQueue(int, int); //constructor cu parametrii
 	PQueue(PQueue& pq); //constructor de copiere
 	~PQueue(); //destrcutor
 	void push(); //adaugare element
