@@ -39,3 +39,13 @@ PQueue::~PQueue() { //destructor
 		p = q;
 	}
 }
+
+void PQueue::push(int x, int pr) { //adaugare element
+	Node* p = start;
+	while (p->next->pr > pr)
+		p = p->next;
+	Node* q = new Node(x, pr);
+	q->next = p->next;
+	p->next = q;
+	this->size++;
+}
