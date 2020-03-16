@@ -1,21 +1,6 @@
 #include "PQueue.h"
 using namespace std;
 
-int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia i
-	Node* p = this->start;
-	for (int j = 0; j < i; j++)
-		p = p->next;
-	return p->info;
-}
-
-int PQueue::getPrEl(int i = 0) { //obtinere prioritatea elementului de pe pozitia i
-	Node* p = this->start;
-	for (int j = 0; j < i; j++)
-		p = p->next;
-	return p->pr;
-
-}
-
 PQueue::PQueue() { //constructor fara parametrii
 	this->size = 0;
 	this->start = nullptr;
@@ -35,13 +20,14 @@ PQueue::PQueue(int x, int pr) { //constructor cu parametrii
 }
 
 PQueue::PQueue(PQueue& pq) { //constructor de copiere
-	this->size = pq.getSize();
-	this->start = new Node(pq.getValElem(), pq.getPrMax());
-	Node* p;
-	p = this->start;
-	for (int i = 1; i < size; i++) {
-		p->next = new Node(pq.getValElem(i), pq.getPrEl(i));
-		start = p->next;
+	this->size = pq.size;
+	Node* q = pq.start;
+	this->start = new Node(q->info, q->pr);
+	Node* p = this->start;
+	while(q->next){
+		q = q->next;
+		p->next = new Node(q->info, q->pr);
+		p = p->next;
 	}
 }
 
@@ -100,13 +86,23 @@ int PQueue::getPrMax() { //obtinere prioritate maxima
 	return start->pr;
 }
 
-void PQueue::operator =(PQueue& pq) { //supraincarcare operator = ??????????
-	this->size = pq.getSize();
-	this->start = new Node(pq.getValElem(), pq.getPrMax());
-	Node* p;
-	p = this->start;
-	for (int i = 1; i < size; i++) {
-		p->next = new Node(pq.getValElem(i), pq.getPrEl(i));
-		start = p->next;
+void PQueue::operator =(PQueue& pq) { //supraincarcare operator =
+	this->~PQueue();
+	this->size = pq.size;
+	this->start = pq.start;
+}
+
+PQueue PQueue::operator +(PQueue& pq) { //supraincarcare operator +
+	PQueue pqNou;
+	Node* p = start;
+	while (p) {
+		pqNou.push(p->info, p->pr);
+		p = p->next;
 	}
+	p = pq.start;
+	while (p) {
+		pqNou.push(p->info, p->pr);
+		p = p->next;
+	}
+	return pqNou;
 }
