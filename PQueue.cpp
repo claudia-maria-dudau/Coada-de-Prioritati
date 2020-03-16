@@ -94,7 +94,7 @@ void PQueue::operator =(PQueue& pq) { //supraincarcare operator =
 
 PQueue PQueue::operator +(PQueue& pq) { //supraincarcare operator +
 	PQueue pqNou;
-	Node* p = start;
+	Node* p = this->start;
 	while (p) {
 		pqNou.push(p->info, p->pr);
 		p = p->next;
@@ -105,13 +105,25 @@ PQueue PQueue::operator +(PQueue& pq) { //supraincarcare operator +
 		p = p->next;
 	}
 	return pqNou;
+	pqNou.size = this->size + pq.size;
 }
 
 void PQueue::operator ++() { //supraincarcare operator ++
-	Node* p = start;
+	Node* p = this->start;
 	while (p) {
 		p->pr++;
 		p = p->next;
 	}
 }
 
+void PQueue::operator --() { //supraincarcare operator --
+	Node* p = this->start;
+	int poz = 0;
+	while (p) {
+		p->pr--;
+		if (p->pr == 0)
+			pop(poz);
+		p = p->next;
+		poz++;
+	}
+}
