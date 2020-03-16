@@ -2,10 +2,18 @@
 using namespace std;
 
 int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia i
-	Node* p = start;
+	Node* p = this->start;
 	for (int j = 0; j < i; j++)
 		p = p->next;
 	return p->info;
+}
+
+int PQueue::getPrEl(int i = 0) { //obtinere prioritatea elementului de pe pozitia i
+	Node* p = this->start;
+	for (int j = 0; j < i; j++)
+		p = p->next;
+	return p->pr;
+
 }
 
 PQueue::PQueue() { //constructor fara parametrii
@@ -28,11 +36,11 @@ PQueue::PQueue(int x, int pr) { //constructor cu parametrii
 
 PQueue::PQueue(PQueue& pq) { //constructor de copiere
 	this->size = pq.getSize();
-	this->start = new Node(pq.getElem(), pq.getPrMax());
+	this->start = new Node(pq.getValElem(), pq.getPrMax());
 	Node* p;
 	p = this->start;
 	for (int i = 1; i < size; i++) {
-		p->next = new Node(pq.getElem(i), pq.getPrEl(pq.getElem(i)));
+		p->next = new Node(pq.getValElem(i), pq.getPrEl(i));
 		start = p->next;
 	}
 }
