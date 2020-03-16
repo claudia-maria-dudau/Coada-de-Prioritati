@@ -106,3 +106,12 @@ PQueue PQueue::operator +(PQueue& pq) { //supraincarcare operator +
 	}
 	return pqNou;
 }
+
+void PQueue::operator ++() { //supraincarcare operator ++
+	Node* p = start;
+	while (p) {
+		p->pr++;
+		p = p->next;
+	}
+}
+
