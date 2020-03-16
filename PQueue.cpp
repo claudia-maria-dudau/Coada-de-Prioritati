@@ -1,6 +1,13 @@
 #include "PQueue.h"
 using namespace std;
 
+int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia i
+	Node* p = start;
+	for (int j = 0; j < i; j++)
+		p = p->next;
+	return p->info;
+}
+
 PQueue::PQueue() { //constructor fara parametrii
 	this->size = 0;
 	this->start = nullptr;
@@ -66,11 +73,11 @@ void PQueue::pop(int i = 0) { //eliminare element
 	this->size--;
 }
 
-int PQueue::getSize() {
+int PQueue::getSize() { //obtinere numar elemente
 	return this->size;
 }
 
-int PQueue::getMax() {
+int PQueue::getMax() { //obtinere valoare maxima
 	Node* p = this->start;
 	int max = p->info;
 	while (p) {
@@ -81,7 +88,7 @@ int PQueue::getMax() {
 	return max;
 }
 
-int PQueue::getPrMax() {
+int PQueue::getPrMax() { //obtinere prioritate maxima
 	return start->pr;
 }
 
