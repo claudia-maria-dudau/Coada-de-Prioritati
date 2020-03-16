@@ -29,3 +29,13 @@ PQueue::PQueue(PQueue& pq) { //constructor de copiere
 		start = p->next;
 	}
 }
+
+PQueue::~PQueue() { //destructor
+	this->size = 0;
+	Node* p = start;
+	while (p) {
+		Node* q = p->next;
+		delete p;
+		p = q;
+	}
+}
