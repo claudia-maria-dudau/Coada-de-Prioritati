@@ -15,7 +15,7 @@ public:
 	PQueue(PQueue& pq); //constructor de copiere
 	~PQueue(); //destrcutor
 	void push(int, int); //adaugare element
-	void pop(); //eliminare element
+	void pop(int i = 0); //eliminare element
 	int getSize(); //obtinere numar elemente
 	int getMax(); //obtinere maxim
 	int getPrMax(); //obtinere prioritatea maxima

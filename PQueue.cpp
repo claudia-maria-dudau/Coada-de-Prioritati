@@ -32,7 +32,7 @@ PQueue::PQueue(PQueue& pq) { //constructor de copiere
 
 PQueue::~PQueue() { //destructor
 	this->size = 0;
-	Node* p = start;
+	Node* p = this->start;
 	while (p) {
 		Node* q = p->next;
 		delete p;
@@ -41,7 +41,7 @@ PQueue::~PQueue() { //destructor
 }
 
 void PQueue::push(int x, int pr) { //adaugare element
-	Node* p = start;
+	Node* p = this->start;
 	while (p->next->pr > pr)
 		p = p->next;
 	Node* q = new Node(x, pr);
@@ -49,3 +49,20 @@ void PQueue::push(int x, int pr) { //adaugare element
 	p->next = q;
 	this->size++;
 }
+
+void PQueue::pop(int i = 0) { //eliminare element
+	if (this->size == 0) {
+		cout << "Coada vida"; //exceptie dc reusesc
+		return;
+	}
+	else {
+		Node* p = this->start;
+		for (int j = 1; j < i; j++)
+			p = p->next;
+		Node* q = p->next;
+		p->next = q->next;
+		delete q;
+	}
+	this->size--;
+}
+
