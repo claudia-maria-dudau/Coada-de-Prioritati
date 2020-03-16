@@ -11,3 +11,9 @@ Node::Node(int x, int p, Node* n) { //constructor fara parametrii
 	this->pr = p;
 	this->next = n;
 }
+
+Node::Node(Node& n) { //constructor de copiere
+	this->info = info;
+	this->pr = pr;
+	this->next = next;
+}
