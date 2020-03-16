@@ -80,3 +80,8 @@ int PQueue::getMax() {
 	}
 	return max;
 }
+
+int PQueue::getPrMax() {
+	return start->pr;
+}
+
