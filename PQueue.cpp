@@ -100,3 +100,13 @@ int PQueue::getPrMax() { //obtinere prioritate maxima
 	return start->pr;
 }
 
+void PQueue::operator =(PQueue& pq) { //supraincarcare operator = ??????????
+	this->size = pq.getSize();
+	this->start = new Node(pq.getValElem(), pq.getPrMax());
+	Node* p;
+	p = this->start;
+	for (int i = 1; i < size; i++) {
+		p->next = new Node(pq.getValElem(i), pq.getPrEl(i));
+		start = p->next;
+	}
+}
