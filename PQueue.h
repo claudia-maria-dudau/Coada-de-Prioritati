@@ -6,6 +6,8 @@
 class PQueue {
 	int size;
 	Node* start;
+	int getElem(int i = 0); // obtinere element de pe poz i
+	int getPrEl(int); //obtinere prioritatea unui element
 
 public:
 	PQueue(); //constructor fara parametrii
