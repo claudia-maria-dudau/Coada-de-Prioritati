@@ -70,3 +70,13 @@ int PQueue::getSize() {
 	return this->size;
 }
 
+int PQueue::getMax() {
+	Node* p = this->start;
+	int max = p->info;
+	while (p) {
+		if (p->info > max)
+			max = p->info;
+		p = p->next;
+	}
+	return max;
+}
