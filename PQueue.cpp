@@ -66,3 +66,7 @@ void PQueue::pop(int i = 0) { //eliminare element
 	this->size--;
 }
 
+int PQueue::getSize() {
+	return this->size;
+}
+
