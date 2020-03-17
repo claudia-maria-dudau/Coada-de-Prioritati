@@ -5,13 +5,21 @@
 using namespace std;
 
 int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia i
+	if (i < 0 or i >= size) {
+		cout << "Pozitie gresita"; //exceptie
+		return;
+	}
 	Node* p = this->start;
 	for (int j = 0; j < i; j++)
 		p = p->next;
 	return p->info;
 }
 
-int PQueue::getPrEl(int i = 0) { //obtinere prioritatea elementului de pe pozitia i
+int PQueue::getPrEl(int i = 0) {//obtinere prioritatea elementului de pe pozitia i
+	if (i < 0 or i >= size) {
+		cout << "Pozitie gresita"; //exceptie
+		return;
+	}
 	Node* p = this->start;
 	for (int j = 0; j < i; j++)
 		p = p->next;
@@ -74,6 +82,15 @@ void PQueue::pop(int i = 0) { //eliminare element
 		cout << "Coada vida"; //exceptie dc reusesc
 		return;
 	}
+	if (i < 0 or i >= size) {
+		cout << "Pozitie gresita"; //exceptie
+		return;
+	}
+	if (i == 0) {
+		Node* p = this->start;
+		this->start = this->start->next;
+		delete p;
+	}
 	else {
 		Node* p = this->start;
 		for (int j = 1; j < i; j++)
@@ -104,7 +121,7 @@ int PQueue::getPrMax() { //obtinere prioritate maxima
 	return start->pr;
 }
 
-int PQueue::getPrMin() {
+int PQueue::getPrMin() { //obtinere prioritate minima
 	Node* p = start;
 	while (p->next)
 		p = p->next;
@@ -129,8 +146,8 @@ PQueue PQueue::operator +(PQueue& pq) { //supraincarcare operator +
 		pqNou.push(p->info, p->pr);
 		p = p->next;
 	}
-	return pqNou;
 	pqNou.size = this->size + pq.size;
+	return pqNou;
 }
 
 void PQueue::operator ++() { //supraincarcare operator ++
@@ -143,13 +160,11 @@ void PQueue::operator ++() { //supraincarcare operator ++
 
 void PQueue::operator --() { //supraincarcare operator --
 	Node* p = this->start;
-	int poz = 0;
-	while (p) {
+	for(int i = 0; i< size; i++) {
 		p->pr--;
 		if (p->pr == 0)
-			pop(poz);
+			pop(i);
 		p = p->next;
-		poz++;
 	}
 }
 
@@ -160,8 +175,10 @@ ostream& operator <<(ostream&, PQueue& pq) { //supraincarcare operator <<
 }
 
 istream& operator >>(istream&, PQueue& pq) { //supraincarcare operator >>
-	int val, prior;
-	while (cin >> val >> prior)
+	int n, val, prior;
+	for (int i = 0; i < n; i++) {
+		cin >> val >> prior;
 		pq.push(val, prior);
+	}
 	return cin;
 }
