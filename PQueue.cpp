@@ -1,6 +1,21 @@
 #include "PQueue.h"
 using namespace std;
 
+int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia i
+	Node* p = this->start;
+	for (int j = 0; j < i; j++)
+		p = p->next;
+	return p->info;
+}
+
+int PQueue::getPrEl(int i = 0) { //obtinere prioritatea elementului de pe pozitia i
+	Node* p = this->start;
+	for (int j = 0; j < i; j++)
+		p = p->next;
+	return p->pr;
+
+}
+
 PQueue::PQueue() { //constructor fara parametrii
 	this->size = 0;
 	this->start = nullptr;
@@ -126,6 +141,11 @@ void PQueue::operator --() { //supraincarcare operator --
 		p = p->next;
 		poz++;
 	}
+}
+
+ostream& operator <<(ostream&, PQueue& pq) { //supraincarcare operator <<
+	for (int i = 0; i < pq.getSize; i++)
+		cout << "(" << pq.getValElem(i) << ", " << pq.getPrEl(i) << ")" << endl;
 }
 
 ostream& operator >>(ostream&, PQueue& pq) { //supraincarcare operator >>
