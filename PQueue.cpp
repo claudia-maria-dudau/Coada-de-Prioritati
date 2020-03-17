@@ -128,9 +128,8 @@ void PQueue::operator --() { //supraincarcare operator --
 	}
 }
 
-ostream& operator <<(ostream&, PQueue& pq) { //supraincarcare operator <<
+ostream& operator >>(ostream&, PQueue& pq) { //supraincarcare operator >>
 	int val, prior;
 	while (cin >> val >> prior)
 		pq.push(val, prior);
 }
-
