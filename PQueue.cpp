@@ -1,14 +1,9 @@
 #include "PQueue.h"
 #include "Node.h"
 #include <iostream>
-#include <fstream>
 using namespace std;
 
 int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia i
-	if (i < 0 or i >= size) {
-		cout << "Pozitie gresita"; //exceptie
-		return;
-	}
 	Node* p = this->start;
 	for (int j = 0; j < i; j++)
 		p = p->next;
@@ -16,10 +11,6 @@ int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia
 }
 
 int PQueue::getPrEl(int i = 0) {//obtinere prioritatea elementului de pe pozitia i
-	if (i < 0 or i >= size) {
-		cout << "Pozitie gresita"; //exceptie
-		return;
-	}
 	Node* p = this->start;
 	for (int j = 0; j < i; j++)
 		p = p->next;
@@ -27,22 +18,11 @@ int PQueue::getPrEl(int i = 0) {//obtinere prioritatea elementului de pe pozitia
 
 }
 
-PQueue::PQueue() { //constructor fara parametrii
-	this->size = 0;
-	this->start = nullptr;
+PQueue::PQueue(): size(0), start(NULL){ //constructor fara parametri
 }
 
-PQueue::PQueue(int x, int pr) { //constructor cu parametrii
-	if (this->size == 0)
-		this->start = new Node(x, pr);
-	else {
-		Node* p;
-		p = this->start;
-		while (p->next != nullptr)
-			p = p->next;
-		p->next = new Node(x, pr);
-	}
-	this->size++;
+PQueue::PQueue(int x, int pr): size(1) { //constructor cu parametri
+	this->start = new Node(x, pr);
 }
 
 PQueue::PQueue(PQueue& pq) { //constructor de copiere
@@ -58,32 +38,41 @@ PQueue::PQueue(PQueue& pq) { //constructor de copiere
 }
 
 PQueue::~PQueue() { //destructor
-	this->size = 0;
-	Node* p = this->start;
+	Node* p = this->start; 
 	while (p) {
-		Node* q = p->next;
-		delete p;
-		p = q;
+		Node* q = p->next;    
+		delete p;                         
+		p = q;                    
 	}
+	this->size = 0;
 }
-
 void PQueue::push(int x, int pr) { //adaugare element
-	Node* p = this->start;
-	while (p->next->pr > pr)
-		p = p->next;
 	Node* q = new Node(x, pr);
-	q->next = p->next;
-	p->next = q;
+	if (this->size == 0)
+		start = q;
+	else {
+		Node* p = this->start;
+		if (pr > p->pr) {
+			q->next = p;
+			start = q;
+		}
+		else {
+			while (p->next and p->next->pr > pr)
+				p = p->next;
+			q->next = p->next;
+			p->next = q;
+		}
+	}
 	this->size++;
 }
 
-void PQueue::pop(int i = 0) { //eliminare element
+void PQueue::pop(int i) { //eliminare element
 	if (this->size == 0) {
 		cout << "Coada vida"; //exceptie dc reusesc
 		return;
 	}
 	if (i < 0 or i >= size) {
-		cout << "Pozitie gresita"; //exceptie
+		cout << "Index out of range"; //exceptie
 		return;
 	}
 	if (i == 0) {
@@ -107,58 +96,65 @@ int PQueue::getSize() { //obtinere numar elemente
 }
 
 int PQueue::getMax() { //obtinere valoare maxima
-	Node* p = this->start;
-	int max = p->info;
-	while (p) {
-		if (p->info > max)
-			max = p->info;
-		p = p->next;
+	if (this->size == 0)
+		cout << "Coada este vida";
+	else {
+		Node* p = this->start;
+		int max = p->info;
+		while (p) {
+			if (p->info > max)
+				max = p->info;
+			p = p->next;
+		}
+		return max;
 	}
-	return max;
 }
 
 int PQueue::getPrMax() { //obtinere prioritate maxima
-	return start->pr;
+	if (this->size == 0)
+		cout << "Coada este vida";
+	else
+		return start->pr;
 }
 
 int PQueue::getPrMin() { //obtinere prioritate minima
-	Node* p = start;
-	while (p->next)
-		p = p->next;
-	return p->pr;
+	if (this->size == 0)
+		cout << "Coada este vida";
+	else {
+		Node* p = start;
+		while (p->next)
+			p = p->next;
+		return p->pr;
+		}
 }
 
 void PQueue::operator =(PQueue& pq) { //supraincarcare operator =
-	this->~PQueue();
+	//this->~PQueue;
 	this->size = pq.size;
 	this->start = pq.start;
 }
 
-PQueue PQueue::operator +(PQueue& pq) { //supraincarcare operator +
+PQueue& PQueue::operator +(PQueue& pq) { //supraincarcare operator +
 	PQueue pqNou;
-	Node* p = this->start;
+	pqNou = *this;
+	Node* p = pq.start;
 	while (p) {
 		pqNou.push(p->info, p->pr);
 		p = p->next;
 	}
-	p = pq.start;
-	while (p) {
-		pqNou.push(p->info, p->pr);
-		p = p->next;
-	}
-	pqNou.size = this->size + pq.size;
 	return pqNou;
 }
 
-void PQueue::operator ++() { //supraincarcare operator ++
+PQueue& PQueue::operator ++() { //supraincarcare operator ++
 	Node* p = this->start;
 	while (p) {
 		p->pr++;
 		p = p->next;
 	}
+	return *this;
 }
 
-void PQueue::operator --() { //supraincarcare operator --
+PQueue& PQueue::operator --() { //supraincarcare operator --
 	Node* p = this->start;
 	for(int i = 0; i< size; i++) {
 		p->pr--;
@@ -166,19 +162,6 @@ void PQueue::operator --() { //supraincarcare operator --
 			pop(i);
 		p = p->next;
 	}
+	return *this;
 }
 
-ostream& operator <<(ostream&, PQueue& pq) { //supraincarcare operator <<
-	for (int i = 0; i < pq.getSize(); i++)
-		cout << "(" << pq.getValElem(i) << ", " << pq.getPrEl(i) << ")" << endl;
-	return cout;
-}
-
-istream& operator >>(istream&, PQueue& pq) { //supraincarcare operator >>
-	int n, val, prior;
-	for (int i = 0; i < n; i++) {
-		cin >> val >> prior;
-		pq.push(val, prior);
-	}
-	return cin;
-}

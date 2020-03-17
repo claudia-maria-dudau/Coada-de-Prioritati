@@ -1,10 +1,8 @@
 #include "Node.h"
+#include <iostream>
 using namespace std;
 
-Node::Node(int x, int p) { //constructor fara parametrii
-	this->info = x;
-	this->pr = p;
-	this->next = nullptr;
+Node::Node(int x, int p): info(x), pr(p), next(NULL) { //constructor fara parametrii
 }
 
 Node::Node(Node& n) { //constructor de copiere
