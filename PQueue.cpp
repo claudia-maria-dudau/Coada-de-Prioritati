@@ -104,6 +104,13 @@ int PQueue::getPrMax() { //obtinere prioritate maxima
 	return start->pr;
 }
 
+int PQueue::getPrMin() {
+	Node* p = start;
+	while (p->next)
+		p = p->next;
+	return p->pr;
+}
+
 void PQueue::operator =(PQueue& pq) { //supraincarcare operator =
 	this->~PQueue();
 	this->size = pq.size;

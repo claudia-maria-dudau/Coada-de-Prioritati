@@ -20,6 +20,7 @@ public:
 	int getSize(); //obtinere numar elemente
 	int getMax(); //obtinere maxim
 	int getPrMax(); //obtinere prioritatea maxima
+	int getPrMin(); //obtinere prioritatea minima
 	void operator =(PQueue&); //supraincarcare operator =
 	PQueue operator +(PQueue&); //supraincarcare operator +
 	void operator ++(); //supraincarcare operator ++
