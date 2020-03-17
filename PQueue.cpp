@@ -1,4 +1,7 @@
 #include "PQueue.h"
+#include "Node.h"
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia i
@@ -144,12 +147,14 @@ void PQueue::operator --() { //supraincarcare operator --
 }
 
 ostream& operator <<(ostream&, PQueue& pq) { //supraincarcare operator <<
-	for (int i = 0; i < pq.getSize; i++)
+	for (int i = 0; i < pq.getSize(); i++)
 		cout << "(" << pq.getValElem(i) << ", " << pq.getPrEl(i) << ")" << endl;
+	return cout;
 }
 
-ostream& operator >>(ostream&, PQueue& pq) { //supraincarcare operator >>
+istream& operator >>(istream&, PQueue& pq) { //supraincarcare operator >>
 	int val, prior;
 	while (cin >> val >> prior)
 		pq.push(val, prior);
+	return cin;
 }

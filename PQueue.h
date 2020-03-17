@@ -1,13 +1,14 @@
 #pragma once
-#include <iostream>
 #include "Node.h"
-#include "Node.cpp"
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 class PQueue {
 	int size;
 	Node* start;
-	int getValElem(int i = 0); // obtinere valoarea elementului de pe pozitia i
-	int getPrEl(int i = 0); //obtinere prioritatea elementului de pe pozitia i
+	int getValElem(int); // obtinere valoarea elementului de pe pozitia i
+	int getPrEl(int); //obtinere prioritatea elementului de pe pozitia i
 
 public:
 	PQueue(); //constructor fara parametrii
@@ -15,7 +16,7 @@ public:
 	PQueue(PQueue& pq); //constructor de copiere
 	~PQueue(); //destrcutor
 	void push(int, int); //adaugare element
-	void pop(int i = 0); //eliminare element
+	void pop(int); //eliminare element
 	int getSize(); //obtinere numar elemente
 	int getMax(); //obtinere maxim
 	int getPrMax(); //obtinere prioritatea maxima
