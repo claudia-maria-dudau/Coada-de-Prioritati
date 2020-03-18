@@ -3,14 +3,14 @@
 #include <iostream>
 using namespace std;
 
-int PQueue::getValElem(int i = 0) { //obtinere valoarea elementului d pe pozitia i
+int PQueue::getValElem(int i = 0) const { //obtinere valoarea elementului d pe pozitia i
 	Node* p = this->start;
 	for (int j = 0; j < i; j++)
 		p = p->next;
 	return p->info;
 }
 
-int PQueue::getPrEl(int i = 0) {//obtinere prioritatea elementului de pe pozitia i
+int PQueue::getPrEl(int i = 0) const {//obtinere prioritatea elementului de pe pozitia i
 	Node* p = this->start;
 	for (int j = 0; j < i; j++)
 		p = p->next;
@@ -26,19 +26,11 @@ PQueue::PQueue(int x, int pr): size(1) { //constructor cu parametri
 }
 
 PQueue::PQueue(PQueue& pq) { //constructor de copiere
-	this->size = pq.size;
-	Node* q = pq.start;
-	this->start = new Node(q->info, q->pr);
-	Node* p = this->start;
-	while (q->next) {
-		q = q->next;
-		p->next = new Node(q->info, q->pr);
-		p = p->next;
-	}
+	*this = pq;
 }
 
 PQueue::~PQueue() { //destructor
-	if (size != 0) {
+	if (size > 0) {
 		Node* p = this->start;
 		while (p->next != NULL) {
 			Node* q = p->next;
@@ -47,6 +39,7 @@ PQueue::~PQueue() { //destructor
 		}
 		delete p;
 		this->size = 0;
+		this->start = NULL;
 	}
 }
 
@@ -72,11 +65,11 @@ void PQueue::push(int x, int pr) { //adaugare element
 
 void PQueue::pop(int i) { //eliminare element
 	if (this->size == 0) {
-		cout << "Coada vida"; //exceptie dc reusesc
+		cout << "Coada vida";
 		return;
 	}
 	if (i < 0 or i >= size) {
-		cout << "Index out of range"; //exceptie
+		cout << "Index out of range";
 		return;
 	}
 	if (i == 0) {
@@ -95,11 +88,11 @@ void PQueue::pop(int i) { //eliminare element
 	this->size--;
 }
 
-int PQueue::getSize() { //obtinere numar elemente
+int PQueue::getSize() const { //obtinere numar elemente
 	return this->size;
 }
 
-int PQueue::getMax() { //obtinere valoare maxima
+int PQueue::getMax() const { //obtinere valoare maxima
 	if (this->size == 0)
 		cout << "Coada este vida";
 	else {
@@ -114,14 +107,14 @@ int PQueue::getMax() { //obtinere valoare maxima
 	}
 }
 
-int PQueue::getPrMax() { //obtinere prioritate maxima
+int PQueue::getPrMax() const { //obtinere prioritate maxima
 	if (this->size == 0)
 		cout << "Coada este vida";
 	else
 		return start->pr;
 }
 
-int PQueue::getPrMin() { //obtinere prioritate minima
+int PQueue::getPrMin() const { //obtinere prioritate minima
 	if (this->size == 0)
 		cout << "Coada este vida";
 	else {
@@ -133,13 +126,22 @@ int PQueue::getPrMin() { //obtinere prioritate minima
 }
 
 PQueue& PQueue::operator =(const PQueue& pq) { //supraincarcare operator =
-	this->~PQueue();
-	this->size = pq.size;
-	this->start = pq.start;
-	return *this;
+	if (this != &pq) {
+		this->~PQueue();
+		this->size = pq.size;
+		Node* q = pq.start;
+		this->start = new Node(q->info, q->pr);
+		Node* p = this->start;
+		while (q->next) {
+			q = q->next;
+			p->next = new Node(q->info, q->pr);
+			p = p->next;
+		}
+		return *this;
+	}
 }
 
-PQueue& PQueue::operator +(const PQueue& pq) { //supraincarcare operator +
+PQueue PQueue::operator +(const PQueue& pq) { //supraincarcare operator +
 	PQueue pqNou(*this);
 	Node* p = pq.start;
 	while (p) {
@@ -168,4 +170,3 @@ PQueue& PQueue::operator --() { //supraincarcare operator --
 	}
 	return *this;
 }
-

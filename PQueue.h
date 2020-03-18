@@ -6,24 +6,24 @@ using namespace std;
 class PQueue {
 	int size;
 	Node* start;
-	int getValElem(int);									//obtinere valoarea elementului de pe pozitia i MERGE
-	int getPrEl(int);										//obtinere prioritatea elementului de pe pozitia i MERGE
-
+	int getValElem(int) const;								//obtinere valoarea elementului de pe pozitia i
+	int getPrEl(int) const;									//obtinere prioritatea elementului de pe pozitia i
+	
 public:
-	PQueue();                                               //constructor fara parametri MERGE
-	PQueue(int, int);                                       //constructor cu parametri MERGE
-	PQueue(PQueue& pq);										//constructor de copiere MERGE
-	~PQueue();												//destrcutor MERGE
-	void push(int, int);									//adaugare element	MERGE
-	void pop(int i = 0);									//eliminare element MERGE
-	int getSize();											//obtinere numar elemente MERGE
-	int getMax();											//obtinere maxim MERGE
-	int getPrMax();											//obtinere prioritatea maxima MERGE
-	int getPrMin();											//obtinere prioritatea minima MERGE
-	PQueue& operator =(const PQueue&);					    //supraincarcare operator = MERGE
-	PQueue& operator +(const PQueue&);						//supraincarcare operator +
-	PQueue& operator ++();									//supraincarcare operator ++ MERGE
-	PQueue& operator --();									//supraincarcare operator -- MERGE
-	friend ostream& operator <<(ostream&, PQueue&);			//supraincarcare operator << (afisare) MERGE
-	friend istream& operator >>(istream&, PQueue&);			//supraincarcarea operatorului >> (citire) MERGE
+	PQueue();                                               //constructor fara parametri
+	PQueue(int, int);                                       //constructor cu parametri
+	PQueue(PQueue& pq);										//constructor de copiere
+	~PQueue();												//destrcutor
+	void push(int, int);									//adaugare element
+	void pop(int i = 0);									//eliminare element
+	int getSize() const;									//obtinere numar elemente
+	int getMax() const;										//obtinere maxim
+	int getPrMax() const;									//obtinere prioritatea maxima
+	int getPrMin() const;									//obtinere prioritatea minima
+	PQueue& operator =(const PQueue&);					    //supraincarcare operator =
+	PQueue operator +(const PQueue&);						//supraincarcare operator +
+	PQueue& operator ++();									//supraincarcare operator ++
+	PQueue& operator --();									//supraincarcare operator --
+	friend ostream& operator <<(ostream&, const PQueue&);	//supraincarcare operator << (afisare)
+	friend istream& operator >>(istream&, PQueue&);			//supraincarcarea operatorului >> (citire)
 };
