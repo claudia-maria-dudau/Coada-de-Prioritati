@@ -51,8 +51,9 @@ int main()
 	cout << "Prioritate minima coada 3: " << p3.getPrMin() << endl;
 	p5 = p4;
 	cout << "Coada 5: " << p5 << endl;
-	PQueue p6 = p1 + p3;
-	//cout << "Coada 1 + 3: " << p1 + p3 << endl;
+	//PQueue p6;
+	//p6 = p1 + p3;
+	//cout << "Coada 1 + 3: " << p6 << endl;
 	cout << "Coada 1++: " << ++p1 << endl;
 	p3.push(1, 1);
 	cout << "Coada 3: " << p3 << endl;

@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Node::Node(int x, int p): info(x), pr(p), next(NULL) { //constructor fara parametrii
+Node::Node(int x, int p): info(x), pr(p) { //constructor fara parametrii
 }
 
 Node::Node(Node& n) { //constructor de copiere

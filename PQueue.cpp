@@ -128,10 +128,11 @@ int PQueue::getPrMin() { //obtinere prioritate minima
 		}
 }
 
-void PQueue::operator =(PQueue& pq) { //supraincarcare operator =
-	//this->~PQueue;
+PQueue& PQueue::operator =(PQueue& pq) { //supraincarcare operator =
+	this->~PQueue();
 	this->size = pq.size;
 	this->start = pq.start;
+	return *this;
 }
 
 PQueue& PQueue::operator +(PQueue& pq) { //supraincarcare operator +

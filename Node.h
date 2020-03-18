@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 class Node {
 	int info, pr;
 	Node* next;
