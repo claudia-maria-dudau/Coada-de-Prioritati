@@ -30,7 +30,7 @@ PQueue::PQueue(PQueue& pq) { //constructor de copiere
 	Node* q = pq.start;
 	this->start = new Node(q->info, q->pr);
 	Node* p = this->start;
-	while(q->next){
+	while (q->next) {
 		q = q->next;
 		p->next = new Node(q->info, q->pr);
 		p = p->next;
@@ -38,14 +38,18 @@ PQueue::PQueue(PQueue& pq) { //constructor de copiere
 }
 
 PQueue::~PQueue() { //destructor
-	Node* p = this->start; 
-	while (p) {
-		Node* q = p->next;    
-		delete p;                         
-		p = q;                    
+	if (size != 0) {
+		Node* p = this->start;
+		while (p->next != NULL) {
+			Node* q = p->next;
+			delete p;
+			p = q;
+		}
+		delete p;
+		this->size = 0;
 	}
-	this->size = 0;
 }
+
 void PQueue::push(int x, int pr) { //adaugare element
 	Node* q = new Node(x, pr);
 	if (this->size == 0)
@@ -128,16 +132,15 @@ int PQueue::getPrMin() { //obtinere prioritate minima
 		}
 }
 
-PQueue& PQueue::operator =(PQueue& pq) { //supraincarcare operator =
+PQueue& PQueue::operator =(const PQueue& pq) { //supraincarcare operator =
 	this->~PQueue();
 	this->size = pq.size;
 	this->start = pq.start;
 	return *this;
 }
 
-PQueue& PQueue::operator +(PQueue& pq) { //supraincarcare operator +
-	PQueue pqNou;
-	pqNou = *this;
+PQueue& PQueue::operator +(const PQueue& pq) { //supraincarcare operator +
+	PQueue pqNou(*this);
 	Node* p = pq.start;
 	while (p) {
 		pqNou.push(p->info, p->pr);
