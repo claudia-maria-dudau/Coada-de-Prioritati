@@ -1,25 +1,24 @@
 #include "PQueue.h"
 #include <iostream>
-#include <fstream>
 using namespace std;
 
-ostream& operator <<(ostream& cout, PQueue& pq) { //supraincarcare operator <<
+ostream& operator <<(ostream& out, const PQueue& pq) { //supraincarcare operator <<
 	if (pq.getSize() == 0)
-		cout << "Coada vida";
+		out << "Coada vida";
 	else
 		for (int i = 0; i < pq.getSize(); i++)
-			cout << "(" << pq.getValElem(i) << ", " << pq.getPrEl(i) << ")" << " ";
-	return cout;
+			out << "(" << pq.getValElem(i) << ", " << pq.getPrEl(i) << ")" << " ";
+	return out;
 }
 
-istream& operator >>(istream& cin, PQueue& pq) { //supraincarcare operator >>
+istream& operator >>(istream& in, PQueue& pq) { //supraincarcare operator >>
 	int n, val, prior;
-	cin >> n;
+	in >> n;
 	for (int i = 0; i < n; i++) {
-		cin >> val >> prior;
+		in >> val >> prior;
 		pq.push(val, prior);
 	}
-	return cin;
+	return in;
 }
 
 int main()
@@ -35,8 +34,8 @@ int main()
 	cout << "Coada 4: " << p4 << endl;
 	PQueue p5(p2);
 	cout << "Coada 5: " << p5 << endl;
-	p4.~PQueue();
-	cout << "Coada 4: " << p4 << endl;
+	//p4.~PQueue();
+	//cout << "Coada 4: " << p4 << endl;
 	p5.pop();
 	cout << "Coada 5: " << p5 << endl;
 	p1.pop(2);
@@ -51,11 +50,13 @@ int main()
 	cout << "Prioritate minima coada 3: " << p3.getPrMin() << endl;
 	p5 = p4;
 	cout << "Coada 5: " << p5 << endl;
-	//PQueue p6;
-	//p6 = p1 + p3;
-	//cout << "Coada 1 + 3: " << p6 << endl;
+	PQueue p6;
+	p6 = p1 + p3;
+	cout << "Coada 1 + 3: " << p6 << endl;
+	cout << "Coada 1 + 3: " << p1 + p3 << endl;
 	cout << "Coada 1++: " << ++p1 << endl;
 	p3.push(1, 1);
 	cout << "Coada 3: " << p3 << endl;
 	cout << "Coada 3--: " << --p3 << endl;
+	return 0;
 }

@@ -1,6 +1,7 @@
 #include "PQueue.h"
 #include "Node.h"
 #include <iostream>
+#include <exception>
 using namespace std;
 
 int PQueue::getValElem(int i = 0) const { //obtinere valoarea elementului d pe pozitia i
@@ -44,34 +45,35 @@ PQueue::~PQueue() { //destructor
 }
 
 void PQueue::push(int x, int pr) { //adaugare element
-	Node* q = new Node(x, pr);
-	if (this->size == 0)
-		start = q;
-	else {
-		Node* p = this->start;
-		if (pr > p->pr) {
-			q->next = p;
+	try {
+		Node* q = new Node(x, pr);
+		if (this->size == 0)
 			start = q;
-		}
 		else {
-			while (p->next and p->next->pr > pr)
-				p = p->next;
-			q->next = p->next;
-			p->next = q;
+			Node* p = this->start;
+			if (pr > p->pr) {
+				q->next = p;
+				start = q;
+			}
+			else {
+				while (p->next and p->next->pr > pr)
+					p = p->next;
+				q->next = p->next;
+				p->next = q;
+			}
 		}
+		this->size++;
 	}
-	this->size++;
+	catch (exception& e) {
+		throw bad_alloc();
+	}
 }
 
 void PQueue::pop(int i) { //eliminare element
-	if (this->size == 0) {
-		cout << "Coada vida";
-		return;
-	}
-	if (i < 0 or i >= size) {
-		cout << "Index out of range";
-		return;
-	}
+	if (this->size == 0)
+		throw underflow_error("Coada este vida");
+	if (i < 0 or i >= size)
+		throw out_of_range("Index out of range");
 	if (i == 0) {
 		Node* p = this->start;
 		this->start = this->start->next;
@@ -94,7 +96,7 @@ int PQueue::getSize() const { //obtinere numar elemente
 
 int PQueue::getMax() const { //obtinere valoare maxima
 	if (this->size == 0)
-		cout << "Coada este vida";
+		throw underflow_error("Coada este vida");
 	else {
 		Node* p = this->start;
 		int max = p->info;
@@ -109,14 +111,14 @@ int PQueue::getMax() const { //obtinere valoare maxima
 
 int PQueue::getPrMax() const { //obtinere prioritate maxima
 	if (this->size == 0)
-		cout << "Coada este vida";
+		throw underflow_error("Coada este vida");
 	else
 		return start->pr;
 }
 
 int PQueue::getPrMin() const { //obtinere prioritate minima
 	if (this->size == 0)
-		cout << "Coada este vida";
+		throw underflow_error("Coada este vida");
 	else {
 		Node* p = start;
 		while (p->next)
@@ -162,11 +164,14 @@ PQueue& PQueue::operator ++() { //supraincarcare operator ++
 
 PQueue& PQueue::operator --() { //supraincarcare operator --
 	Node* p = this->start;
-	for(int i = 0; i< size; i++) {
+	int i;
+	for (i = 0; i < size; i++) {
 		p->pr--;
 		if (p->pr == 0)
-			pop(i);
+			break;
 		p = p->next;
 	}
+	while (i < size)
+		pop(i);
 	return *this;
 }
